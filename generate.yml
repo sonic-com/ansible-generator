@@ -112,16 +112,10 @@
         dest: "{{ role_path }}/{{ item.dest | default(item.source) }}"
         mode: "{{ item.mode | default('0644') }}"
       with_items:
-        - source: bug_report.md
-          dest: .github/ISSUE_TEMPLATE/bug_report.md
-        - source: feature_request.md
-          dest: .github/ISSUE_TEMPLATE/feature_request.md
         - source: gitignore
           dest: .gitignore
         - source: yamllint
           dest: .yamllint
-        - source: pre-commit-config.yaml
-          dest: .pre-commit-config.yaml
       loop_control:
         label: "{{ item.source }}"
 
@@ -135,31 +129,8 @@
         - source: ansible-lint
           dest: .ansible-lint
         - source: tox.ini
-        - source: settings.yml
-          dest: .github/settings.yml
-        - source: LICENSE-2.0.txt
-          dest: LICENSE
-        - source: SECURITY.md
         - source: molecule.yml
           dest: molecule/default/molecule.yml
-        - source: CONTRIBUTING.md
-        - source: molecule-action.yml
-          dest: .github/workflows/molecule.yml
-        - source: galaxy.yml
-          dest: .github/workflows/galaxy.yml
-        - source: todo-action.yml
-          dest: .github/workflows/todo.yml
-        - source: gitlab-ci.yml
-          dest: .gitlab-ci.yml
         - source: requirements.txt
-        - source: requirements2png.yml
-          dest: .github/workflows/requirements2png.yml
-        - source: FUNDING.yml
-          dest: .github/FUNDING.yml
       loop_control:
         label: "{{ item.source }}"
-
-    - name: Install pre-commit
-      ansible.builtin.command:
-        cmd: pre-commit install
-        creates: .git/hooks/pre-commit
