@@ -1,16 +1,11 @@
 ---
 extends: default
+ignore: |
+  files/*
+  meta/*
 
 rules:
-  braces:
-    max-spaces-inside: 1
-    level: error
-  brackets:
-    max-spaces-inside: 1
-    level: error
-  line-length: disable
-  truthy: disable
-
-ignore: |
-  .tox/
-  .cache/
+  line-length:
+    max: 160 # 80 isn't enough
+  comments:
+    min-spaces-from-content: 1 # Default of 2 is annoying and "ansible-lint --write" puts it back to 1
