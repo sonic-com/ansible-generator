@@ -16,3 +16,40 @@ exclude_paths:
   - ./.cache
   - ./.github
   - ./requirements.yml
+  - "*.txt" # docs
+  - README.md # docs
+  - .ansible* # Tries to treat its own configuration as a playbook file
+  - .yamllint* # Also gets treated as a playbook file
+  - .config # For future use, don't want included
+
+# Needed to parse any playbook with a "target" in it
+extra_vars:
+  target: rocky9.build.noc.sonic.net
+
+enable_list:
+  # Enable some opt-in checks:
+  - empty-string-compare
+  - loop-var-prefix # Mostly only matters for nested loops
+  - no-same-owner
+  - no-log-password
+  # Explicitly enable some experimental checks:
+  - ignore-errors
+  - key-order
+  - risky-file-permissions
+  - schema
+  - var-naming
+  - sonic-octal-quoted
+  - sonic-role-naming
+
+skip_list:
+  # We don't really care about metadata in our roles, so disable metadata
+  # checks:
+  - meta-incorrect
+  - meta-no-info
+  - meta-no-tags
+  - meta-video-links
+  - meta-*
+  - schema[meta]
+  # Since we're doing "sonic_base :" type start for names, permanently ignore
+  # this:
+  - name[casing]
